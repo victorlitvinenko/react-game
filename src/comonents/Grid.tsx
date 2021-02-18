@@ -5,23 +5,41 @@ import random from '../libs/random';
 
 import './grid.scss';
 
-const Grid: React.FC = () => {
-  const matrix = Array(4 * 4).fill(null);
-  matrix[random(0, 15)] = 1;
-  matrix[random(0, 15)] = 1;
-  matrix[random(0, 15)] = 1;
+interface IGridProps {
+  matrixWidth?: number;
+}
 
-  // const randomFill = (count: number) => {
-  //   const result = [];
-  //   for (let i = 1; i <= count; i += 1) {
+interface ICube {
+  type: string;
+  position: number;
+}
 
-  //   }
-  // };
+const Grid: React.FC<IGridProps> = ({ matrixWidth = 4 }) => {
+  const matrix = Array(matrixWidth * matrixWidth).fill(null);
+
+  const allCubes: ICube[] = [];
+  const cube = { type: 'default' };
+
+  const getNextPosition = (prevPosition: number): number => {
+    return prevPosition + 1;
+  };
+
+  const fillMatrix = (count: number) => {
+    for (let i = 1; i <= count; i += 1) {
+      const position =
+        allCubes.length === 0
+          ? random(0, matrixWidth * matrixWidth - 1)
+          : getNextPosition(allCubes[allCubes.length - 1].position);
+      matrix[position] = cube;
+      allCubes.push({ ...cube, position });
+    }
+  };
+  fillMatrix(3);
 
   return (
     <div className="grid">
-      {matrix.flat().map((cell) => (
-        <div className="grid__cell">{cell ? <Cube rotate={2} /> : <div />}</div>
+      {matrix.map((cell) => (
+        <div className="grid__cell">{cell ? <Cube rotationsCount={2} /> : <div />}</div>
       ))}
     </div>
   );

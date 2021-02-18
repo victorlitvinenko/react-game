@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import './cube.scss';
 
 interface ICubeProps {
-  rotate: number;
+  rotationsCount: number;
 }
 
-const Cube: React.FC<ICubeProps> = ({ rotate }) => {
-  const [rotation, setRotation] = useState(rotate);
+const Cube: React.FC<ICubeProps> = ({ rotationsCount }) => {
+  const [rotation, setRotation] = useState(rotationsCount);
 
   return (
     <div className="cube">
