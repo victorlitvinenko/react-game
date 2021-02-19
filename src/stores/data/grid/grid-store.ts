@@ -4,35 +4,40 @@ import random from '../../../libs/random';
 import getNextPosition from '../../../libs/get-next-position';
 import { Cube, CubeTypes } from './cube';
 
-const defaultCube: Cube = { type: CubeTypes.Fixed };
-
 class GridStore {
   grid: (Cube | null)[] = [];
 
   size = 4;
 
+  cubesCount = 6;
+
   constructor() {
-    this.createNewMatrix(this.size, 6);
+    this.createNewMatrix(this.size, this.cubesCount);
     makeAutoObservable(this);
   }
 
-  createNewMatrix(gridWidth = 4, cubesCount: number) {
+  createNewMatrix(gridSize = this.size, cubesCount = this.cubesCount) {
     this.grid = Array(this.size ** 2).fill(null);
 
-    let lastPosition = null;
+    let currentPosition = null;
     const allPositions = [];
     for (let i = 1; i <= cubesCount; i += 1) {
       const position: number =
-        lastPosition !== null ? getNextPosition(allPositions, lastPosition, this.size) : random(0, gridWidth ** 2 - 1);
+        currentPosition !== null
+          ? getNextPosition(allPositions, currentPosition, this.size)
+          : random(0, gridSize ** 2 - 1);
 
-      this.grid[position] = defaultCube;
+      this.grid[position] = new Cube(position, CubeTypes.Fixed);
       allPositions.push(position);
-      lastPosition = position;
+      currentPosition = position;
     }
-    // const allCubesPositions = this.matrix.reduce((acc: number[], el: CubeType | null, idx: number) => {
-    //   if (el) return [...acc, idx];
-    //   return acc;
-    // }, []);
+    // const allCubesPositions = this.grid.reduce(
+    //   (acc: number[], el: Cube | null, idx: number) => {
+    //     if (el) return [...acc, idx];
+    //     return acc;
+    //   },
+    //   []
+    // );
   }
 }
 

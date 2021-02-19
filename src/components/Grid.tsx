@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import Cube from './Cube';
 import RootStore from '../stores/root-store';
+import Cube from './Cube';
 
 import './grid.scss';
 
@@ -24,7 +24,7 @@ const Grid: React.FC<PropsType> = () => {
     >
       {GridStore.grid.map((cell, index) => (
         <div className="grid__cell" key={`${index * 2}`}>
-          {cell && <Cube rotationsCount={2} />}
+          {cell && <Cube value={cell} />}
         </div>
       ))}
     </div>

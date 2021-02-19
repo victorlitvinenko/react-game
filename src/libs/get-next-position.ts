@@ -1,24 +1,37 @@
 import random from './random';
 
-export default (allPositions: number[], prevPosition: number, matrixWidth: number): number => {
-  const leftBoundry = prevPosition - (prevPosition % matrixWidth);
+const getNextPosition = (
+  allPositions: number[],
+  currentPosition: number,
+  matrixWidth: number
+): number => {
+  const leftBoundry = currentPosition - (currentPosition % matrixWidth);
   const rightBoundry = leftBoundry + matrixWidth - 1;
 
   const availablePositions = [
-    prevPosition - 1,
-    prevPosition + 1,
-    prevPosition - matrixWidth,
-    prevPosition + matrixWidth,
+    currentPosition - 1,
+    currentPosition + 1,
+    currentPosition - matrixWidth,
+    currentPosition + matrixWidth,
   ]
     .filter((pos) => !allPositions.includes(pos))
     .filter((pos) => pos >= 0 && pos < matrixWidth ** 2)
     .filter(
       (pos) =>
         (pos >= leftBoundry && pos <= rightBoundry) ||
-        pos === prevPosition - matrixWidth ||
-        pos === prevPosition + matrixWidth
+        pos === currentPosition - matrixWidth ||
+        pos === currentPosition + matrixWidth
     );
 
-  const newPosition = availablePositions[random(0, availablePositions.length - 1)];
+  const newPosition =
+    availablePositions.length === 0
+      ? getNextPosition(
+          allPositions,
+          allPositions[random(0, allPositions.length - 1)],
+          matrixWidth
+        )
+      : availablePositions[random(0, availablePositions.length - 1)];
   return newPosition;
 };
+
+export default getNextPosition;

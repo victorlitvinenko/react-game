@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+
+import { Cube } from '../stores/data/grid/cube';
 
 import './cube.scss';
 
-type PropsType = {
-  rotationsCount: number;
+type Props = {
+  value: Cube;
 };
 
-const Cube: React.FC<PropsType> = ({ rotationsCount }) => {
-  const [rotation, setRotation] = useState(rotationsCount);
+const CubeComponent: React.FC<Props> = ({ value }) => {
+  const [rotation, setRotation] = useState(value.turns);
+
+  useEffect(() => {
+    value.changeTurns(rotation % 4);
+  }, [rotation, value]);
 
   return (
     <div className="cube">
@@ -19,8 +25,9 @@ const Cube: React.FC<PropsType> = ({ rotationsCount }) => {
           transform: `rotate(${rotation * 90}deg)`,
         }}
       >
-        <h4>{rotation % 4}</h4>
+        <h1>{value.id}</h1>
         <div className="cube__icon">
+          <div />
           <div />
           <div />
           <div />
@@ -30,4 +37,4 @@ const Cube: React.FC<PropsType> = ({ rotationsCount }) => {
   );
 };
 
-export default observer(Cube);
+export default observer(CubeComponent);
