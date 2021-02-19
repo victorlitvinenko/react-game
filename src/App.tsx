@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Grid from './comonents/Grid';
+import Grid from './components/Grid';
 
 const App: React.FC = () => {
   return (

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import './cube.scss';
 
-interface ICubeProps {
+type PropsType = {
   rotationsCount: number;
-}
+};
 
-const Cube: React.FC<ICubeProps> = ({ rotationsCount }) => {
+const Cube: React.FC<PropsType> = ({ rotationsCount }) => {
   const [rotation, setRotation] = useState(rotationsCount);
 
   return (
@@ -29,4 +30,4 @@ const Cube: React.FC<ICubeProps> = ({ rotationsCount }) => {
   );
 };
 
-export default Cube;
+export default observer(Cube);

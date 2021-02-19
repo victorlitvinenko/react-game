@@ -6,6 +6,9 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
+    "classnames": "^2.2.6",
+    "mobx": "^6.1.7",
+    "mobx-react-lite": "^3.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
@@ -16,6 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint --fix --ext .js,.ts,.tsx .",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -38,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.11",
     "@types/jest": "^26.0.20",
     "@types/node": "^12.20.1",
     "@types/react": "^17.0.2",
