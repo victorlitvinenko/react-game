@@ -56,6 +56,11 @@ class GridStore {
     //   []
     // );
   }
+
+  moveCube(from: number, to: number) {
+    this.grid[to] = this.grid[from];
+    this.grid[from] = null;
+  }
 }
 
 export default new GridStore();
