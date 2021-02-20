@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
-import random from '../../../libs/random';
 import getNextPosition from '../../../libs/get-next-position';
+import random from '../../../libs/random';
 import { Cube, CubeTypes } from './cube';
 
 class GridStore {
@@ -27,7 +27,24 @@ class GridStore {
           ? getNextPosition(allPositions, currentPosition, this.size)
           : random(0, gridSize ** 2 - 1);
 
-      this.grid[position] = new Cube(position, CubeTypes.Fixed);
+      const getRandomType = () => {
+        const randomType = random(0, 3);
+        switch (randomType) {
+          case 0:
+            return CubeTypes.Fixed;
+          case 1:
+            return CubeTypes.Draggable;
+          case 2:
+            return CubeTypes.Rotatable;
+          case 3:
+            return CubeTypes.DragRotatable;
+          default:
+            break;
+        }
+        return CubeTypes.Fixed;
+      };
+
+      this.grid[position] = new Cube(position, getRandomType());
       allPositions.push(position);
       currentPosition = position;
     }

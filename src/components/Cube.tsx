@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+import cn from 'classnames';
 
-import { Cube } from '../stores/data/grid/cube';
+import { Cube, CubeTypes } from '../stores/data/grid/cube';
 
 import './cube.scss';
 
@@ -16,16 +17,27 @@ const CubeComponent: React.FC<Props> = ({ value }) => {
     value.changeTurns(rotation % 4);
   }, [rotation, value]);
 
+  const onClick = () => {
+    switch (value.type) {
+      case CubeTypes.Rotatable:
+      case CubeTypes.DragRotatable:
+        setRotation(rotation + 1);
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
-    <div className="cube">
+    <div className={cn('cube', `cube--${value.type}`)}>
       <button
         type="button"
-        onClick={() => setRotation(rotation + 1)}
+        onClick={onClick}
         style={{
           transform: `rotate(${rotation * 90}deg)`,
         }}
       >
-        <h1>{value.id}</h1>
         <div className="cube__icon">
           <div />
           <div />

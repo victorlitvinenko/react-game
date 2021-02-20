@@ -48,8 +48,4 @@ export class Cube {
   changeType(newType: CubeTypes): void {
     this.type = newType;
   }
-
-  changePosition(position: number): void {
-    this.winPosition = position;
-  }
 }
