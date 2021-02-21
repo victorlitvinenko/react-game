@@ -26,20 +26,13 @@ let runningId = 0;
 export class CubeType {
   id: number;
 
+  scaling = 0;
+
   kind: Kinds;
 
   turns = 0;
 
   connections: ConnectionsType;
-
-  get currentConnections(): ConnectionsType {
-    return {
-      [(Sides.Top + this.turns) % 4]: this.connections[Sides.Top],
-      [(Sides.Right + this.turns) % 4]: this.connections[Sides.Right],
-      [(Sides.Bottom + this.turns) % 4]: this.connections[Sides.Bottom],
-      [(Sides.Left + this.turns) % 4]: this.connections[Sides.Left],
-    } as ConnectionsType;
-  }
 
   constructor(kind: Kinds) {
     this.id = runningId;
@@ -55,6 +48,15 @@ export class CubeType {
     makeAutoObservable(this);
   }
 
+  get currentConnections(): ConnectionsType {
+    return {
+      [(Sides.Top + this.turns) % 4]: this.connections[Sides.Top],
+      [(Sides.Right + this.turns) % 4]: this.connections[Sides.Right],
+      [(Sides.Bottom + this.turns) % 4]: this.connections[Sides.Bottom],
+      [(Sides.Left + this.turns) % 4]: this.connections[Sides.Left],
+    } as ConnectionsType;
+  }
+
   changeConnections(key: Sides, value: number): void {
     this.connections = { ...this.connections, [key]: value };
   }
@@ -65,5 +67,9 @@ export class CubeType {
 
   changeType(kind: Kinds): void {
     this.kind = kind;
+  }
+
+  changeScaling(scaling: number): void {
+    this.scaling = scaling;
   }
 }

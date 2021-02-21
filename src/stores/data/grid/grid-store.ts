@@ -13,7 +13,7 @@ class GridStore {
 
   constructor() {
     this.createNewMatrix(this.size, this.cubesCount);
-    this.randomizeMatrix();
+    this.createConnections();
     makeAutoObservable(this);
   }
 
@@ -57,7 +57,7 @@ class GridStore {
     // );
   }
 
-  randomizeMatrix() {
+  private createConnections() {
     this.grid.forEach((cube, index) => {
       if (cube) {
         const leftBoundry = index - (index % this.size);

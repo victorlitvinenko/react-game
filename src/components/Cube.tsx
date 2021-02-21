@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 
 import { CubeType, Sides, Kinds } from '../stores/data/grid/cube';
+import random from '../libs/random';
 
 import './cube.scss';
 
@@ -30,14 +31,20 @@ type Props = {
 
 const Cube: React.FC<Props> = ({ value, index }) => {
   const [rotation, setRotation] = useState(value.turns);
+  const [scale, setScale] = useState(value.scaling);
 
   useEffect(() => {
     value.changeTurns(rotation % 4);
   }, [rotation, value]);
 
-  const onClick = () => {
-    console.log(value);
+  useEffect(() => {
+    setTimeout(() => {
+      setScale(1);
+      value.changeScaling(1);
+    }, random(100, 300));
+  }, [value]);
 
+  const onClick = () => {
     switch (value.kind) {
       case Kinds.Rotatable:
       case Kinds.DragRotatable:
@@ -70,7 +77,7 @@ const Cube: React.FC<Props> = ({ value, index }) => {
         >
           <div
             style={{
-              transform: `rotate(${rotation * 90}deg)`,
+              transform: `rotate(${rotation * 90}deg) scale(${scale})`,
             }}
           >
             <Connection type="right" count={value.connections?.[Sides.Right]} />
