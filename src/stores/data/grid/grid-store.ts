@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, autorun } from 'mobx';
 
 import getNextPosition from '../../../libs/get-next-position';
 import random from '../../../libs/random';
@@ -12,10 +12,63 @@ class GridStore {
   cubesCount = 6;
 
   constructor() {
+    this.init();
+
+    autorun(() => {
+      console.log('Has won:', this.hasWon);
+    });
+
+    makeAutoObservable(this);
+  }
+
+  init() {
     this.createNewMatrix(this.size, this.cubesCount);
     this.createConnections();
     this.shuffleCubes();
-    makeAutoObservable(this);
+  }
+
+  get hasWon() {
+    return this.grid.every((cube, index) => {
+      if (!cube) return true;
+
+      const leftBoundry = index - (index % this.size);
+      const rightBoundry = leftBoundry + this.size - 1;
+      if (
+        cube.currentConnections[Sides.Top] &&
+        cube.currentConnections[Sides.Top] !==
+          this.grid[index - this.size]?.currentConnections[Sides.Bottom]
+      ) {
+        return false;
+      }
+      if (
+        cube.currentConnections[Sides.Bottom] &&
+        cube.currentConnections[Sides.Bottom] !==
+          this.grid[index + this.size]?.currentConnections[Sides.Top]
+      ) {
+        return false;
+      }
+      if (cube.currentConnections[Sides.Right] && index === rightBoundry) {
+        return false;
+      }
+      if (
+        cube.currentConnections[Sides.Right] &&
+        cube.currentConnections[Sides.Right] !==
+          this.grid[index + 1]?.currentConnections[Sides.Left]
+      ) {
+        return false;
+      }
+      if (cube.currentConnections[Sides.Left] && index === leftBoundry) {
+        return false;
+      }
+      if (
+        cube.currentConnections[Sides.Left] &&
+        cube.currentConnections[Sides.Left] !==
+          this.grid[index - 1]?.currentConnections[Sides.Right]
+      ) {
+        return false;
+      }
+      return true;
+    });
   }
 
   createNewMatrix(gridSize = this.size, cubesCount = this.cubesCount) {

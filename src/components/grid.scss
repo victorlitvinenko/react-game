@@ -8,6 +8,10 @@
   border: 1px solid #386899;
   box-shadow: 3px 3px 0 0 rgb(0 0 0 / 20%);
 
+  &--disabled .cube > div {
+    cursor: default !important;
+  }
+
   &__cell {
     flex-grow: 1;
     border: 1px solid #386899;

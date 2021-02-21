@@ -6,6 +6,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import { CubeType, Sides, Kinds } from '../stores/data/grid/cube';
 import random from '../libs/random';
+import RootStore from '../stores/root-store';
 
 import './cube.scss';
 
@@ -30,6 +31,9 @@ type Props = {
 };
 
 const Cube: React.FC<Props> = ({ value, index }) => {
+  const {
+    DataStore: { GridStore },
+  } = RootStore;
   const [rotation, setRotation] = useState(value.turns);
   const [scale, setScale] = useState(value.scaling);
 
@@ -45,6 +49,7 @@ const Cube: React.FC<Props> = ({ value, index }) => {
   }, [value]);
 
   const onClick = () => {
+    if (GridStore.hasWon) return;
     switch (value.kind) {
       case Kinds.Rotatable:
       case Kinds.DragRotatable:
@@ -61,7 +66,8 @@ const Cube: React.FC<Props> = ({ value, index }) => {
       draggableId={value.id.toString()}
       index={index}
       isDragDisabled={
-        ![Kinds.DragRotatable, Kinds.Draggable].includes(value.kind)
+        ![Kinds.DragRotatable, Kinds.Draggable].includes(value.kind) ||
+        GridStore.hasWon
       }
     >
       {(provided) => (

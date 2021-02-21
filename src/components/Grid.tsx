@@ -33,7 +33,7 @@ const Grid: React.FC<Props> = () => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div
-        className="grid"
+        className={cn('grid', { 'grid--disabled': GridStore.hasWon })}
         style={{
           gridTemplateRows: `repeat(${GridStore.size}, 1fr)`,
           gridTemplateColumns: `repeat(${GridStore.size}, 1fr)`,
