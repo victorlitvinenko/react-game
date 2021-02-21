@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 
 import getNextPosition from '../../../libs/get-next-position';
 import random from '../../../libs/random';
-import { CubeType, Kinds } from './cube';
+import { CubeType, Kinds, Sides } from './cube';
 
 class GridStore {
   grid: (CubeType | null)[] = [];
@@ -13,6 +13,7 @@ class GridStore {
 
   constructor() {
     this.createNewMatrix(this.size, this.cubesCount);
+    this.randomizeMatrix();
     makeAutoObservable(this);
   }
 
@@ -39,9 +40,8 @@ class GridStore {
           case 3:
             return Kinds.DragRotatable;
           default:
-            break;
+            throw new Error('Unknown kind of cube!');
         }
-        return Kinds.Fixed;
       };
 
       this.grid[position] = new CubeType(getRandomType());
@@ -55,6 +55,49 @@ class GridStore {
     //   },
     //   []
     // );
+  }
+
+  randomizeMatrix() {
+    this.grid.forEach((cube, index) => {
+      if (cube) {
+        const leftBoundry = index - (index % this.size);
+        const rightBoundry = leftBoundry + this.size - 1;
+        if (!cube.connections[Sides.Top] && this.grid[index - this.size]) {
+          const connectionsCount = random(1, 4);
+          cube.changeConnections(Sides.Top, connectionsCount);
+          this.grid[index - this.size]?.changeConnections(
+            Sides.Bottom,
+            connectionsCount
+          );
+        }
+        if (
+          !cube.connections[Sides.Right] &&
+          index < rightBoundry &&
+          this.grid[index + 1]
+        ) {
+          const connectionsCount = random(1, 4);
+          cube.changeConnections(Sides.Right, connectionsCount);
+          this.grid[index + 1]?.changeConnections(Sides.Left, connectionsCount);
+        }
+        if (!cube.connections[Sides.Bottom] && this.grid[index + this.size]) {
+          const connectionsCount = random(1, 4);
+          cube.changeConnections(Sides.Bottom, connectionsCount);
+          this.grid[index + this.size]?.changeConnections(
+            Sides.Top,
+            connectionsCount
+          );
+        }
+        if (
+          !cube.connections[Sides.Left] &&
+          index > leftBoundry &&
+          this.grid[index - 1]
+        ) {
+          const connectionsCount = random(1, 4);
+          cube.changeConnections(Sides.Right, connectionsCount);
+          this.grid[index + 1]?.changeConnections(Sides.Left, connectionsCount);
+        }
+      }
+    });
   }
 
   moveCube(from: number, to: number) {

@@ -4,9 +4,24 @@ import { observer } from 'mobx-react-lite';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 
-import { CubeType, Kinds } from '../stores/data/grid/cube';
+import { CubeType, Sides, Kinds } from '../stores/data/grid/cube';
 
 import './cube.scss';
+
+type ConnectionProps = {
+  type: string;
+  count: number;
+};
+
+const Connection: React.FC<ConnectionProps> = ({ type, count }) => {
+  return (
+    <div className={cn('cube__icon', `cube__icon--${type}`)}>
+      {[...Array(count).keys()].map((index) => (
+        <div key={index} />
+      ))}
+    </div>
+  );
+};
 
 type Props = {
   value: CubeType;
@@ -21,6 +36,8 @@ const Cube: React.FC<Props> = ({ value, index }) => {
   }, [rotation, value]);
 
   const onClick = () => {
+    console.log(value);
+
     switch (value.kind) {
       case Kinds.Rotatable:
       case Kinds.DragRotatable:
@@ -56,12 +73,13 @@ const Cube: React.FC<Props> = ({ value, index }) => {
               transform: `rotate(${rotation * 90}deg)`,
             }}
           >
-            <div className="cube__icon">
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
+            <Connection type="right" count={value.connections?.[Sides.Right]} />
+            <Connection type="left" count={value.connections?.[Sides.Left]} />
+            <Connection type="top" count={value.connections?.[Sides.Top]} />
+            <Connection
+              type="bottom"
+              count={value.connections?.[Sides.Bottom]}
+            />
           </div>
         </div>
       )}

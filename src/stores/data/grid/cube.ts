@@ -32,6 +32,15 @@ export class CubeType {
 
   connections: ConnectionsType;
 
+  get currentConnections(): ConnectionsType {
+    return {
+      [(Sides.Top + this.turns) % 4]: this.connections[Sides.Top],
+      [(Sides.Right + this.turns) % 4]: this.connections[Sides.Right],
+      [(Sides.Bottom + this.turns) % 4]: this.connections[Sides.Bottom],
+      [(Sides.Left + this.turns) % 4]: this.connections[Sides.Left],
+    } as ConnectionsType;
+  }
+
   constructor(kind: Kinds) {
     this.id = runningId;
     runningId += 1;

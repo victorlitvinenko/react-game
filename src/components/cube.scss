@@ -9,15 +9,59 @@
 
   &__icon {
     position: absolute;
-    left: calc(100% + 1px);
     top: 50%;
     transform: translate(0, -50%);
     width: 13%;
+
+    &--right {
+      left: calc(100% + 1px);
+    }
+
+    &--left {
+      right: calc(100% + 1px);
+    }
 
     & > div {
       height: 8px;
       background: white;
       margin: 12px 0;
+    }
+
+    &--bottom {
+      top: calc(100% + 1px);
+      display: flex;
+      justify-content: center;
+      display: flex;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: inherit;
+      height: 13%;
+
+      & > div {
+        height: 100%;
+        width: 8px;
+        background: white;
+        margin: 0 6px;
+      };
+    }
+
+    &--top {
+      top: inherit;
+      bottom: calc(100% + 1px);
+      display: flex;
+      justify-content: center;
+      display: flex;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: inherit;
+      height: 13%;
+
+      & > div {
+        height: 100%;
+        width: 8px;
+        background: white;
+        margin: 0 6px;
+      };
     }
   }
 
