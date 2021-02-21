@@ -1,43 +1,52 @@
 import { makeAutoObservable } from 'mobx';
 
-export enum CubeTypes {
+export enum Sides {
+  Top = 0,
+  Right = 1,
+  Bottom = 2,
+  Left = 3,
+}
+
+export enum Kinds {
   Fixed = 'fixed',
   Rotatable = 'rotatable',
   Draggable = 'draggable',
   DragRotatable = 'dragrotatable',
 }
 
-export type ConnectionsTypes = {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
+export type ConnectionsType = {
+  [Sides.Top]: number;
+  [Sides.Right]: number;
+  [Sides.Bottom]: number;
+  [Sides.Left]: number;
 };
 
 let runningId = 0;
 
-export class Cube {
+export class CubeType {
   id: number;
 
-  winPosition: number;
-
-  type: CubeTypes;
+  kind: Kinds;
 
   turns = 0;
 
-  connections: ConnectionsTypes;
+  connections: ConnectionsType;
 
-  constructor(winPosition: number, type: CubeTypes) {
+  constructor(kind: Kinds) {
     this.id = runningId;
     runningId += 1;
-    this.winPosition = winPosition;
-    this.type = type;
-    this.connections = { left: 0, top: 0, right: 0, bottom: 0 };
+    this.kind = kind;
+    this.connections = {
+      [Sides.Top]: 0,
+      [Sides.Right]: 0,
+      [Sides.Bottom]: 0,
+      [Sides.Left]: 0,
+    };
     // this.turns = random(0, 3);
     makeAutoObservable(this);
   }
 
-  changeConnections(key: string, value: number): void {
+  changeConnections(key: Sides, value: number): void {
     this.connections = { ...this.connections, [key]: value };
   }
 
@@ -45,7 +54,7 @@ export class Cube {
     this.turns = count;
   }
 
-  changeType(newType: CubeTypes): void {
-    this.type = newType;
+  changeType(kind: Kinds): void {
+    this.kind = kind;
   }
 }

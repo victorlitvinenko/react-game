@@ -2,10 +2,10 @@ import { makeAutoObservable } from 'mobx';
 
 import getNextPosition from '../../../libs/get-next-position';
 import random from '../../../libs/random';
-import { Cube, CubeTypes } from './cube';
+import { CubeType, Kinds } from './cube';
 
 class GridStore {
-  grid: (Cube | null)[] = [];
+  grid: (CubeType | null)[] = [];
 
   size = 4;
 
@@ -31,20 +31,20 @@ class GridStore {
         const randomType = random(0, 3);
         switch (randomType) {
           case 0:
-            return CubeTypes.Fixed;
+            return Kinds.Fixed;
           case 1:
-            return CubeTypes.Draggable;
+            return Kinds.Draggable;
           case 2:
-            return CubeTypes.Rotatable;
+            return Kinds.Rotatable;
           case 3:
-            return CubeTypes.DragRotatable;
+            return Kinds.DragRotatable;
           default:
             break;
         }
-        return CubeTypes.Fixed;
+        return Kinds.Fixed;
       };
 
-      this.grid[position] = new Cube(position, getRandomType());
+      this.grid[position] = new CubeType(getRandomType());
       allPositions.push(position);
       currentPosition = position;
     }

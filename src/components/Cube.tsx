@@ -4,16 +4,16 @@ import { observer } from 'mobx-react-lite';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 
-import { Cube, CubeTypes } from '../stores/data/grid/cube';
+import { CubeType, Kinds } from '../stores/data/grid/cube';
 
 import './cube.scss';
 
 type Props = {
-  value: Cube;
+  value: CubeType;
   index: number;
 };
 
-const CubeComponent: React.FC<Props> = ({ value, index }) => {
+const Cube: React.FC<Props> = ({ value, index }) => {
   const [rotation, setRotation] = useState(value.turns);
 
   useEffect(() => {
@@ -21,9 +21,9 @@ const CubeComponent: React.FC<Props> = ({ value, index }) => {
   }, [rotation, value]);
 
   const onClick = () => {
-    switch (value.type) {
-      case CubeTypes.Rotatable:
-      case CubeTypes.DragRotatable:
+    switch (value.kind) {
+      case Kinds.Rotatable:
+      case Kinds.DragRotatable:
         setRotation(rotation + 1);
         break;
 
@@ -37,12 +37,12 @@ const CubeComponent: React.FC<Props> = ({ value, index }) => {
       draggableId={value.id.toString()}
       index={index}
       isDragDisabled={
-        ![CubeTypes.DragRotatable, CubeTypes.Draggable].includes(value.type)
+        ![Kinds.DragRotatable, Kinds.Draggable].includes(value.kind)
       }
     >
       {(provided) => (
         <div
-          className={cn('cube', `cube--${value.type}`)}
+          className={cn('cube', `cube--${value.kind}`)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
@@ -52,8 +52,6 @@ const CubeComponent: React.FC<Props> = ({ value, index }) => {
           tabIndex={0}
         >
           <div
-            // type="button"
-            // onClick={onClick}
             style={{
               transform: `rotate(${rotation * 90}deg)`,
             }}
@@ -71,4 +69,4 @@ const CubeComponent: React.FC<Props> = ({ value, index }) => {
   );
 };
 
-export default observer(CubeComponent);
+export default observer(Cube);

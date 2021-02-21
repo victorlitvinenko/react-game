@@ -5,8 +5,8 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import type { DropResult } from 'react-beautiful-dnd';
 import cn from 'classnames';
 
+import Cube from './Cube';
 import RootStore from '../stores/root-store';
-import CubeComponent from './Cube';
 
 import './grid.scss';
 
@@ -53,7 +53,7 @@ const Grid: React.FC<Props> = () => {
                   'grid__cell--dragging-over': snapshot.isDraggingOver,
                 })}
               >
-                {cell && <CubeComponent value={cell} index={index} />}
+                {cell && <Cube value={cell} index={index} />}
               </div>
             )}
           </Droppable>
