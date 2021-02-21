@@ -14,6 +14,7 @@ class GridStore {
   constructor() {
     this.createNewMatrix(this.size, this.cubesCount);
     this.createConnections();
+    this.shuffleCubes();
     makeAutoObservable(this);
   }
 
@@ -95,6 +96,38 @@ class GridStore {
           const connectionsCount = random(1, 4);
           cube.changeConnections(Sides.Right, connectionsCount);
           this.grid[index + 1]?.changeConnections(Sides.Left, connectionsCount);
+        }
+      }
+    });
+  }
+
+  shuffleCubes() {
+    this.grid.forEach((cube, index) => {
+      if (cube && cube.kind !== Kinds.Fixed) {
+        const randomPositions = this.grid.reduce(
+          (acc: number[], el: CubeType | null, idx: number) => {
+            if (!el) return [...acc, idx];
+            return acc;
+          },
+          []
+        );
+        const newRandomPosition =
+          randomPositions[random(0, randomPositions.length - 1)];
+        const newRandomRotation = random(0, 3);
+
+        switch (cube.kind) {
+          case Kinds.Draggable:
+            this.moveCube(index, newRandomPosition);
+            break;
+          case Kinds.DragRotatable:
+            this.moveCube(index, newRandomPosition);
+            cube.changeTurns(newRandomRotation);
+            break;
+          case Kinds.Rotatable:
+            cube.changeTurns(newRandomRotation);
+            break;
+          default:
+            break;
         }
       }
     });
