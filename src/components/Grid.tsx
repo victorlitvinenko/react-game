@@ -32,33 +32,35 @@ const Grid: React.FC<Props> = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div
-        className={cn('grid', { 'grid--disabled': GridStore.hasWon })}
-        style={{
-          gridTemplateRows: `repeat(${GridStore.size}, 1fr)`,
-          gridTemplateColumns: `repeat(${GridStore.size}, 1fr)`,
-        }}
-      >
-        {GridStore.grid.map((cell, index) => (
-          <Droppable
-            droppableId={index.toString()}
-            key={`${GridStore.startIndex + index}`}
-            isDropDisabled={!!cell}
-          >
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className={cn('grid__cell', {
-                  'grid__cell--dragging-over': snapshot.isDraggingOver,
-                })}
-              >
-                {cell && <Cube value={cell} index={index} />}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ))}
+      <div className="square">
+        <div
+          className={cn('grid', { 'grid--disabled': GridStore.hasWon })}
+          style={{
+            gridTemplateRows: `repeat(${GridStore.size}, 1fr)`,
+            gridTemplateColumns: `repeat(${GridStore.size}, 1fr)`,
+          }}
+        >
+          {GridStore.grid.map((cell, index) => (
+            <Droppable
+              droppableId={index.toString()}
+              key={`${GridStore.startIndex + index}`}
+              isDropDisabled={!!cell}
+            >
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className={cn('grid__cell', {
+                    'grid__cell--dragging-over': snapshot.isDraggingOver,
+                  })}
+                >
+                  {cell && <Cube value={cell} index={index} />}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ))}
+        </div>
       </div>
     </DragDropContext>
   );

@@ -15,7 +15,19 @@ code {
 
 .app {
   height: 100vh;
+  padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.square {
+  position: relative;
+  width: 600px;
+}
+
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
 }
