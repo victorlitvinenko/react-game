@@ -42,7 +42,7 @@ const Grid: React.FC<Props> = () => {
         {GridStore.grid.map((cell, index) => (
           <Droppable
             droppableId={index.toString()}
-            key={`${index * 2}`}
+            key={`${GridStore.startIndex + index}`}
             isDropDisabled={!!cell}
           >
             {(provided, snapshot) => (
@@ -54,6 +54,7 @@ const Grid: React.FC<Props> = () => {
                 })}
               >
                 {cell && <Cube value={cell} index={index} />}
+                {provided.placeholder}
               </div>
             )}
           </Droppable>

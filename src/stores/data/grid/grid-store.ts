@@ -11,6 +11,8 @@ class GridStore {
 
   cubesCount = 6;
 
+  startIndex = 0;
+
   constructor() {
     this.init();
 
@@ -22,6 +24,7 @@ class GridStore {
   }
 
   init() {
+    this.startIndex += this.size ** 2;
     this.createNewMatrix(this.size, this.cubesCount);
     this.createConnections();
     this.shuffleCubes();
@@ -102,13 +105,6 @@ class GridStore {
       allPositions.push(position);
       currentPosition = position;
     }
-    // const allCubesPositions = this.grid.reduce(
-    //   (acc: number[], el: Cube | null, idx: number) => {
-    //     if (el) return [...acc, idx];
-    //     return acc;
-    //   },
-    //   []
-    // );
   }
 
   private createConnections() {
