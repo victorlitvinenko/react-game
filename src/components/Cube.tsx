@@ -51,10 +51,13 @@ type Props = {
 const Cube: React.FC<Props> = ({ value, index }) => {
   const {
     DataStore: { GridStore },
+    SettingsStore,
   } = RootStore;
   const [rotation, setRotation] = useState(value.turns);
   const [scale, setScale] = useState(value.scaling);
-  const [playRotate] = useSound(rotateSfx);
+  const [playRotate] = useSound(rotateSfx, {
+    volume: SettingsStore.isSoundsOn ? SettingsStore.soundsVolume : 0,
+  });
 
   useEffect(() => {
     value.changeTurns(rotation % 4);

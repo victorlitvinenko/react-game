@@ -23,9 +23,11 @@ const Grid: React.FC<Props> = () => {
     SettingsStore,
   } = RootStore;
 
-  const [playMove] = useSound(moveSfx, { volume: SettingsStore.soundsVolume });
+  const [playMove] = useSound(moveSfx, {
+    volume: SettingsStore.isSoundsOn ? SettingsStore.soundsVolume : 0,
+  });
   const [playSuccess] = useSound(successSfx, {
-    volume: SettingsStore.soundsVolume,
+    volume: SettingsStore.isSoundsOn ? SettingsStore.soundsVolume : 0,
   });
 
   useEffect(() => {

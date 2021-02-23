@@ -7,7 +7,7 @@ class SettingsStore {
 
   soundsVolume = 1;
 
-  musicVolume = 1;
+  musicVolume = 20;
 
   constructor() {
     makeAutoObservable(this);
@@ -26,7 +26,7 @@ class SettingsStore {
   }
 
   switchMusic(isOn: boolean) {
-    this.isSoundsOn = isOn;
+    this.isMusicOn = isOn;
   }
 }
 
