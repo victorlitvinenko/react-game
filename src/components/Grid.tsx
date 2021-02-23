@@ -20,10 +20,13 @@ interface Props {
 const Grid: React.FC<Props> = () => {
   const {
     DataStore: { GridStore },
+    SettingsStore,
   } = RootStore;
 
-  const [playMove] = useSound(moveSfx);
-  const [playSuccess] = useSound(successSfx);
+  const [playMove] = useSound(moveSfx, { volume: SettingsStore.soundsVolume });
+  const [playSuccess] = useSound(successSfx, {
+    volume: SettingsStore.soundsVolume,
+  });
 
   useEffect(() => {
     if (GridStore.hasWon) playSuccess();

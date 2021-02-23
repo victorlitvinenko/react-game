@@ -8,6 +8,7 @@ import './ui.scss';
 const Ui: React.FC = () => {
   const {
     DataStore: { GridStore },
+    SettingsStore,
   } = RootStore;
 
   return (
@@ -25,6 +26,24 @@ const Ui: React.FC = () => {
           onClick={() => GridStore.init()}
         >
           Следующий
+        </button>
+      </div>
+      <div className="ui_settings">
+        <button
+          type="button"
+          onClick={() => {
+            SettingsStore.changeSoundsVolume(1);
+          }}
+        >
+          +
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            SettingsStore.changeSoundsVolume(0.5);
+          }}
+        >
+          -
         </button>
       </div>
     </>
