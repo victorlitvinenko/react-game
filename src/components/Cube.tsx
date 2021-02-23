@@ -2,11 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import cn from 'classnames';
-import { Draggable } from 'react-beautiful-dnd';
+import {
+  Draggable,
+  DraggableStateSnapshot,
+  DraggingStyle,
+  NotDraggingStyle,
+} from 'react-beautiful-dnd';
+import useSound from 'use-sound';
 
 import { CubeType, Sides, Kinds } from '../stores/data/grid/cube';
 import random from '../libs/random';
 import RootStore from '../stores/root-store';
+import rotateSfx from '../sounds/rotate.mp3';
 
 import './cube.scss';
 
@@ -14,6 +21,17 @@ type ConnectionProps = {
   type: string;
   count: number;
 };
+
+const getStyle = (
+  style: DraggingStyle | NotDraggingStyle | undefined,
+  snapshot: DraggableStateSnapshot
+) =>
+  !snapshot.isDropAnimating
+    ? style
+    : {
+        ...style,
+        transitionDuration: `0.05s`,
+      };
 
 const Connection: React.FC<ConnectionProps> = ({ type, count }) => {
   return (
@@ -36,6 +54,7 @@ const Cube: React.FC<Props> = ({ value, index }) => {
   } = RootStore;
   const [rotation, setRotation] = useState(value.turns);
   const [scale, setScale] = useState(value.scaling);
+  const [playRotate] = useSound(rotateSfx);
 
   useEffect(() => {
     value.changeTurns(rotation % 4);
@@ -53,6 +72,7 @@ const Cube: React.FC<Props> = ({ value, index }) => {
     switch (value.kind) {
       case Kinds.Rotatable:
       case Kinds.DragRotatable:
+        playRotate();
         setRotation(rotation + 1);
         break;
 
@@ -70,11 +90,12 @@ const Cube: React.FC<Props> = ({ value, index }) => {
         GridStore.hasWon
       }
     >
-      {(provided) => (
+      {(provided, snapshot) => (
         <div
           className={cn('cube', `cube--${value.kind}`)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          style={getStyle(provided.draggableProps.style, snapshot)}
           ref={provided.innerRef}
           onClick={onClick}
           onKeyDown={() => {}}

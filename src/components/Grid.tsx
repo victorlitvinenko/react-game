@@ -1,12 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import type { DropResult } from 'react-beautiful-dnd';
 import cn from 'classnames';
+import useSound from 'use-sound';
 
 import Cube from './Cube';
 import RootStore from '../stores/root-store';
+import moveSfx from '../sounds/step.mp3';
+import successSfx from '../sounds/success.mp3';
 
 import './grid.scss';
 
@@ -19,6 +22,13 @@ const Grid: React.FC<Props> = () => {
     DataStore: { GridStore },
   } = RootStore;
 
+  const [playMove] = useSound(moveSfx);
+  const [playSuccess] = useSound(successSfx);
+
+  useEffect(() => {
+    if (GridStore.hasWon) playSuccess();
+  }, [GridStore.hasWon, playSuccess]);
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result;
     if (
@@ -27,6 +37,7 @@ const Grid: React.FC<Props> = () => {
       source.droppableId === destination.droppableId
     )
       return;
+    playMove();
     GridStore.moveCube(+source.droppableId, +destination.droppableId);
   };
 
