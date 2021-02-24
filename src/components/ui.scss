@@ -2,13 +2,29 @@
   &__title {
     position: absolute;
     top: 50px;
-    transform: translate(0, -150px);
-    transition: .3s;
     color: white;
     font-size: 38px;
     font-weight: 600;
     text-shadow: 1px 1px 2px black;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 2;
+    overflow: hidden;
+
+    @media (max-width: 690px) {
+      top: 110px;
+    }
+
+    @media (max-width: 520px) {
+      top: 150px;
+    }
+  }
+
+  &__title-text {
+    transition: .3s;
+    transform: translate(0, -150px);
   }
 
   &__settings {
@@ -33,6 +49,13 @@
     overflow: hidden;
     z-index: 1;
 
+    @media (max-width: 690px) {
+      bottom: 50px;
+    }
+    @media (max-width: 520px) {
+      bottom: 80px;
+    }
+
     & > button {
       cursor: pointer;
       background: #329940;
@@ -49,6 +72,49 @@
         border: 0;
         outline: none;
       }
+    }
+  }
+
+  &__github {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+
+    & > div {
+      font-size: 24px;
+      color: white;
+    }
+
+    & a {
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+    }
+
+    & svg {
+      width: 48px;
+      height: 48px;
+      margin: 20px;
+      cursor: pointer;
+    }
+  }
+
+  &__rs-school {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    & a {
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+    }
+
+    & img {
+      width: 120px;
+      margin: 20px;
     }
   }
 }
