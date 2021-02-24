@@ -27,7 +27,7 @@
     transform: translate(0, -150px);
   }
 
-  &__settings {
+  &__sound-settings {
     position: absolute;
     right: 0;
     top: 0;
@@ -38,6 +38,19 @@
     width: 200px;
     gap: 15px;
     z-index: 1;
+  }
+
+  &__settings {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    width: 200px;
+    z-index: 1;
+
+    & > button {
+      margin-bottom: 15px;
+    }
   }
 
   &__button {
@@ -73,73 +86,5 @@
         outline: none;
       }
     }
-  }
-
-  &__github {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-
-    & > div {
-      font-size: 24px;
-      color: white;
-    }
-
-    & a {
-      display: inline-block;
-      position: relative;
-      z-index: 1;
-    }
-
-    & svg {
-      width: 48px;
-      height: 48px;
-      margin: 20px;
-      cursor: pointer;
-    }
-  }
-
-  &__rs-school {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-
-    & a {
-      display: inline-block;
-      position: relative;
-      z-index: 1;
-    }
-
-    & img {
-      width: 120px;
-      margin: 20px;
-    }
-  }
-}
-
-.sound-button {
-  background: #329940;
-  border: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-
-  & svg {
-    max-width: 100%;
-    max-height: 100%;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &--disabled {
-    background: gray;
   }
 }
