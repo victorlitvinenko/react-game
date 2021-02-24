@@ -7,7 +7,7 @@ class SettingsStore {
 
   soundsVolume = 1;
 
-  musicVolume = 20;
+  musicVolume = 0.2;
 
   constructor() {
     makeAutoObservable(this);

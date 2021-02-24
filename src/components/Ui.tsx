@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import cn from 'classnames';
 import * as Icon from 'react-feather';
@@ -8,29 +8,28 @@ import music from '../sounds/music.mp3';
 
 import './ui.scss';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sound = require('react-sound').default;
-
 const Ui: React.FC = () => {
   const {
     DataStore: { GridStore },
     SettingsStore,
   } = RootStore;
 
-  const [isMusicPlaying, setIsMusicPlaying] = useState(Sound.status.STOPPED);
-  document.addEventListener('click', () =>
-    setIsMusicPlaying(Sound.status.PLAYING)
-  );
+  const musicRef = useRef<HTMLAudioElement>(null);
+  document.addEventListener('click', () => musicRef.current?.play());
+
+  useEffect(() => {
+    if (musicRef.current) {
+      musicRef.current.volume = SettingsStore.isMusicOn
+        ? +SettingsStore.musicVolume
+        : 0;
+    }
+  }, [SettingsStore.isMusicOn, SettingsStore.musicVolume]);
 
   return (
     <>
-      <Sound
-        url={music}
-        playStatus={isMusicPlaying}
-        loop
-        volume={SettingsStore.isMusicOn ? +SettingsStore.musicVolume : 0}
-        muted
-      />
+      <audio loop ref={musicRef} src={music}>
+        <track kind="captions" />
+      </audio>
       <div
         className="ui__title"
         style={GridStore.hasWon ? { transform: 'translate(0, 0)' } : {}}
@@ -58,9 +57,9 @@ const Ui: React.FC = () => {
         </button>
         <input
           type="range"
-          value={SettingsStore.musicVolume}
+          value={SettingsStore.musicVolume * 100}
           onChange={({ target: { value } }) =>
-            SettingsStore.changeMusicVolume(+value)
+            SettingsStore.changeMusicVolume(+value / 100)
           }
           disabled={!SettingsStore.isMusicOn}
         />
