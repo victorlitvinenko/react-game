@@ -6,14 +6,24 @@ import Game from './components/Game';
 import SettingsStore from './stores/settings/settings-store';
 import Settings from './components/Settings';
 
+const CustomRouter = observer(() => {
+  switch (SettingsStore.status) {
+    case 'default':
+      return <Game />;
+    case 'settings':
+      return <Settings />;
+    default:
+      throw new Error('Unknown status');
+  }
+});
+
 const App: React.FC = () => {
   return (
     <div className="app">
-      {SettingsStore.status === 'default' && <Game />}
-      {SettingsStore.status === 'settings' && <Settings />}
+      <CustomRouter />
       <Footer />
     </div>
   );
 };
 
-export default observer(App);
+export default App;
