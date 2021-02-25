@@ -7,9 +7,9 @@ import cn from 'classnames';
 import useSound from 'use-sound';
 
 import Cube from './Cube';
-import RootStore from '../stores/root-store';
-import moveSfx from '../sounds/step.mp3';
-import successSfx from '../sounds/success.mp3';
+import RootStore from '../../stores/root-store';
+import moveSfx from '../../sounds/step.mp3';
+import successSfx from '../../sounds/success.mp3';
 
 import './grid.scss';
 
@@ -52,8 +52,9 @@ const Grid: React.FC<Props> = () => {
         <div
           className={cn('grid', { 'grid--disabled': GridStore.hasWon })}
           style={{
-            gridTemplateRows: `repeat(${GridStore.size}, 1fr)`,
-            gridTemplateColumns: `repeat(${GridStore.size}, 1fr)`,
+            gridTemplateRows: `repeat(${SettingsStore.gridSize}, 1fr)`,
+            gridTemplateColumns: `repeat(${SettingsStore.gridSize}, 1fr)`,
+            background: SettingsStore.boardColor,
           }}
         >
           {GridStore.grid.map((cell, index) => (

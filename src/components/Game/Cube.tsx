@@ -10,10 +10,10 @@ import {
 } from 'react-beautiful-dnd';
 import useSound from 'use-sound';
 
-import { CubeType, Sides, Kinds } from '../stores/data/grid/cube';
-import random from '../libs/random';
-import RootStore from '../stores/root-store';
-import rotateSfx from '../sounds/rotate.mp3';
+import { CubeType, Sides, Kinds } from '../../stores/data/grid/cube';
+import random from '../../libs/random';
+import RootStore from '../../stores/root-store';
+import rotateSfx from '../../sounds/rotate.mp3';
 
 import './cube.scss';
 

@@ -1,14 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import cn from 'classnames';
 import * as Icon from 'react-feather';
 
-import RootStore from '../stores/root-store';
-import music from '../sounds/music.mp3';
+import RootStore from '../../stores/root-store';
+import music from '../../sounds/music.mp3';
+import Btn from '../Btn';
 
 import './ui.scss';
-import Btn from './Btn';
-import Footer from './Footer';
 
 const Ui: React.FC = () => {
   const {
@@ -80,17 +78,16 @@ const Ui: React.FC = () => {
         />
       </div>
       <div className="ui__settings">
-        <Btn onClick={() => {}}>
+        <Btn onClick={() => SettingsStore.changeStatus('settings')}>
           <Icon.Settings color="white" />
         </Btn>
         <Btn onClick={() => {}}>
           <Icon.List color="white" />
         </Btn>
-        <Btn onClick={() => {}}>
+        <Btn onClick={() => GridStore.init()}>
           <Icon.RefreshCw color="white" />
         </Btn>
       </div>
-      <Footer />
     </>
   );
 };

@@ -1,31 +1,25 @@
-import { makeAutoObservable, autorun } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 import getNextPosition from '../../../libs/get-next-position';
 import random from '../../../libs/random';
 import { CubeType, Kinds, Sides } from './cube';
+import SettingsStore from '../../settings/settings-store';
 
 class GridStore {
+  SettingsStore = SettingsStore;
+
   grid: (CubeType | null)[] = [];
-
-  size = 4;
-
-  cubesCount = 6;
 
   startIndex = 0;
 
   constructor() {
     this.init();
-
-    autorun(() => {
-      console.log('Has won:', this.hasWon);
-    });
-
     makeAutoObservable(this);
   }
 
   init() {
-    this.startIndex += this.size ** 2;
-    this.createNewMatrix(this.size, this.cubesCount);
+    this.startIndex += SettingsStore.gridSize ** 2;
+    this.createNewMatrix();
     this.createConnections();
     this.shuffleCubes();
   }
@@ -34,19 +28,23 @@ class GridStore {
     return this.grid.every((cube, index) => {
       if (!cube) return true;
 
-      const leftBoundry = index - (index % this.size);
-      const rightBoundry = leftBoundry + this.size - 1;
+      const leftBoundry = index - (index % SettingsStore.gridSize);
+      const rightBoundry = leftBoundry + SettingsStore.gridSize - 1;
       if (
         cube.currentConnections[Sides.Top] &&
         cube.currentConnections[Sides.Top] !==
-          this.grid[index - this.size]?.currentConnections[Sides.Bottom]
+          this.grid[index - SettingsStore.gridSize]?.currentConnections[
+            Sides.Bottom
+          ]
       ) {
         return false;
       }
       if (
         cube.currentConnections[Sides.Bottom] &&
         cube.currentConnections[Sides.Bottom] !==
-          this.grid[index + this.size]?.currentConnections[Sides.Top]
+          this.grid[index + SettingsStore.gridSize]?.currentConnections[
+            Sides.Top
+          ]
       ) {
         return false;
       }
@@ -74,16 +72,20 @@ class GridStore {
     });
   }
 
-  createNewMatrix(gridSize = this.size, cubesCount = this.cubesCount) {
-    this.grid = Array(this.size ** 2).fill(null);
+  createNewMatrix() {
+    this.grid = Array(SettingsStore.gridSize ** 2).fill(null);
 
     let currentPosition = null;
     const allPositions = [];
-    for (let i = 1; i <= cubesCount; i += 1) {
+    for (let i = 1; i <= SettingsStore.cubesCount; i += 1) {
       const position: number =
         currentPosition !== null
-          ? getNextPosition(allPositions, currentPosition, this.size)
-          : random(0, gridSize ** 2 - 1);
+          ? getNextPosition(
+              allPositions,
+              currentPosition,
+              SettingsStore.gridSize
+            )
+          : random(0, SettingsStore.gridSize ** 2 - 1);
 
       const getRandomType = () => {
         const randomType = random(0, 3);
@@ -110,12 +112,15 @@ class GridStore {
   private createConnections() {
     this.grid.forEach((cube, index) => {
       if (cube) {
-        const leftBoundry = index - (index % this.size);
-        const rightBoundry = leftBoundry + this.size - 1;
-        if (!cube.connections[Sides.Top] && this.grid[index - this.size]) {
+        const leftBoundry = index - (index % SettingsStore.gridSize);
+        const rightBoundry = leftBoundry + SettingsStore.gridSize - 1;
+        if (
+          !cube.connections[Sides.Top] &&
+          this.grid[index - SettingsStore.gridSize]
+        ) {
           const connectionsCount = random(1, 4);
           cube.changeConnections(Sides.Top, connectionsCount);
-          this.grid[index - this.size]?.changeConnections(
+          this.grid[index - SettingsStore.gridSize]?.changeConnections(
             Sides.Bottom,
             connectionsCount
           );
@@ -129,10 +134,13 @@ class GridStore {
           cube.changeConnections(Sides.Right, connectionsCount);
           this.grid[index + 1]?.changeConnections(Sides.Left, connectionsCount);
         }
-        if (!cube.connections[Sides.Bottom] && this.grid[index + this.size]) {
+        if (
+          !cube.connections[Sides.Bottom] &&
+          this.grid[index + SettingsStore.gridSize]
+        ) {
           const connectionsCount = random(1, 4);
           cube.changeConnections(Sides.Bottom, connectionsCount);
-          this.grid[index + this.size]?.changeConnections(
+          this.grid[index + SettingsStore.gridSize]?.changeConnections(
             Sides.Top,
             connectionsCount
           );
