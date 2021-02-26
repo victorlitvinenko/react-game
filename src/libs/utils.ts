@@ -1,6 +1,16 @@
+import moment from 'moment';
+
 import random from './random';
 
-const getNextPosition = (
+export const formatDuration = (ms: number): string => {
+  const days = Math.floor(ms / 8.64e7);
+  const msOnLastDay = ms - days * 8.64e7;
+  return `${days < 10 ? `0${days}` : days}:${moment
+    .utc(msOnLastDay)
+    .format('HH:mm:ss')}`;
+};
+
+export const getNextPosition = (
   allPositions: number[],
   currentPosition: number,
   matrixWidth: number
@@ -33,5 +43,3 @@ const getNextPosition = (
       : availablePositions[random(0, availablePositions.length - 1)];
   return newPosition;
 };
-
-export default getNextPosition;

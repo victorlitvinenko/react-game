@@ -10,6 +10,7 @@ import Cube from './Cube';
 import RootStore from '../../stores/root-store';
 import moveSfx from '../../sounds/step.mp3';
 import successSfx from '../../sounds/success.mp3';
+import StatisticsStore from '../../stores/statistics/statistics-store';
 
 import './grid.scss';
 
@@ -43,6 +44,7 @@ const Grid: React.FC<Props> = () => {
     )
       return;
     playMove();
+    StatisticsStore.move();
     GridStore.moveCube(+source.droppableId, +destination.droppableId);
   };
 

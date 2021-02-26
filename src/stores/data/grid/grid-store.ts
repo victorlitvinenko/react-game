@@ -1,12 +1,15 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, reaction } from 'mobx';
 
-import getNextPosition from '../../../libs/get-next-position';
+import { getNextPosition } from '../../../libs/utils';
 import random from '../../../libs/random';
 import { CubeType, Kinds, Sides } from './cube';
 import SettingsStore from '../../settings/settings-store';
+import StatisticsStore from '../../statistics/statistics-store';
 
 class GridStore {
   SettingsStore = SettingsStore;
+
+  StatisticsStore = StatisticsStore;
 
   grid: (CubeType | null)[] = [];
 
@@ -15,6 +18,12 @@ class GridStore {
   constructor() {
     this.init();
     makeAutoObservable(this);
+    reaction(
+      () => this.hasWon,
+      () => {
+        StatisticsStore.addNewItem();
+      }
+    );
   }
 
   init() {
@@ -22,6 +31,7 @@ class GridStore {
     this.createNewMatrix();
     this.createConnections();
     this.shuffleCubes();
+    StatisticsStore.reset();
   }
 
   get hasWon() {

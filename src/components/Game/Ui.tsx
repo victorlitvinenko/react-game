@@ -81,7 +81,7 @@ const Ui: React.FC = () => {
         <Btn onClick={() => SettingsStore.changeStatus('settings')}>
           <Icon.Settings color="white" />
         </Btn>
-        <Btn onClick={() => {}}>
+        <Btn onClick={() => SettingsStore.changeStatus('stats')}>
           <Icon.List color="white" />
         </Btn>
         <Btn onClick={() => GridStore.init()}>

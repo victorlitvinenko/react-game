@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Game from './components/Game';
 import SettingsStore from './stores/settings/settings-store';
 import Settings from './components/Settings';
+import Statistics from './components/Statistics';
 
 const CustomRouter = observer(() => {
   switch (SettingsStore.status) {
@@ -12,6 +13,8 @@ const CustomRouter = observer(() => {
       return <Game />;
     case 'settings':
       return <Settings />;
+    case 'stats':
+      return <Statistics />;
     default:
       throw new Error('Unknown status');
   }

@@ -9,6 +9,7 @@
     "classnames": "^2.2.6",
     "mobx": "^6.1.7",
     "mobx-react-lite": "^3.2.0",
+    "moment": "^2.29.1",
     "random-seed": "^0.3.0",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.0.0",
