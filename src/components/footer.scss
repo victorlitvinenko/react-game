@@ -1,6 +1,6 @@
 .footer {
   &__github {
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     display: flex;
@@ -9,6 +9,7 @@
     & > div {
       font-size: 24px;
       color: white;
+     text-shadow: 1px 1px 0 black;
     }
 
     & a {
@@ -26,7 +27,7 @@
   }
 
   &__rs-school {
-    position: absolute;
+    position: fixed;
     right: 0;
     bottom: 0;
 

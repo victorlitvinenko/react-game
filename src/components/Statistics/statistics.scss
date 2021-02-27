@@ -2,7 +2,7 @@
   color: white;
 
   &__ui {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     padding: 20px;
@@ -16,6 +16,7 @@
 
   & td {
     font-size: 28px;
-    padding: 0 20px 20px 0;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
   }
 }
