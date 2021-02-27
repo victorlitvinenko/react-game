@@ -4,7 +4,6 @@ import 'moment/locale/ru';
 import * as Icon from 'react-feather';
 
 import { formatDuration } from '../../libs/utils';
-import rootStore from '../../stores/root-store';
 import settingsStore from '../../stores/settings/settings-store';
 import StatisticsStore from '../../stores/statistics/statistics-store';
 import Btn from '../Btn';
@@ -15,7 +14,6 @@ moment.locale('ru');
 
 const Statistics: React.FC = () => {
   const applyChanges = () => {
-    rootStore.DataStore.GridStore.init();
     settingsStore.changeStatus('default');
   };
 

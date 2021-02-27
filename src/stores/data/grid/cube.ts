@@ -22,6 +22,12 @@ export type ConnectionsType = {
 };
 
 let runningId = 0;
+const initialConnections = {
+  [Sides.Top]: 0,
+  [Sides.Right]: 0,
+  [Sides.Bottom]: 0,
+  [Sides.Left]: 0,
+};
 
 export class CubeType {
   id: number;
@@ -34,17 +40,12 @@ export class CubeType {
 
   connections: ConnectionsType;
 
-  constructor(kind: Kinds) {
+  constructor(kind: Kinds, turns = 0, connections = initialConnections) {
     this.id = runningId;
     runningId += 1;
     this.kind = kind;
-    this.connections = {
-      [Sides.Top]: 0,
-      [Sides.Right]: 0,
-      [Sides.Bottom]: 0,
-      [Sides.Left]: 0,
-    };
-    // this.turns = random(0, 3);
+    this.turns = turns;
+    this.connections = connections;
     makeAutoObservable(this);
   }
 

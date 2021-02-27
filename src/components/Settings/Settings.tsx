@@ -1,9 +1,7 @@
 import { observer } from 'mobx-react-lite';
-import * as Icon from 'react-feather';
 
 import rootStore from '../../stores/root-store';
 import settingsStore from '../../stores/settings/settings-store';
-import Btn from '../Btn';
 
 import './settings.scss';
 
@@ -15,11 +13,6 @@ const Settings: React.FC = () => {
 
   return (
     <div className="settings">
-      <div className="settings__ui">
-        <Btn onClick={applyChanges}>
-          <Icon.ArrowLeft color="white" />
-        </Btn>
-      </div>
       <div className="settings__title">Настройки</div>
       <div className="settings__body">
         <div>Ширина поля:</div>

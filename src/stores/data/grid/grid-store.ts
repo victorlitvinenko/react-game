@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction } from 'mobx';
+import { autorun, makeAutoObservable, reaction } from 'mobx';
 
 import { getNextPosition } from '../../../libs/utils';
 import random from '../../../libs/random';
@@ -16,14 +16,34 @@ class GridStore {
   startIndex = 0;
 
   constructor() {
-    this.init();
+    const positionsStorage = localStorage.getItem('positions');
+    if (positionsStorage) {
+      this.loadPositions(JSON.parse(positionsStorage));
+    } else {
+      this.init();
+    }
     makeAutoObservable(this);
+    autorun(() => {
+      localStorage.setItem('positions', JSON.stringify(this.grid));
+    });
     reaction(
       () => this.hasWon,
       () => {
         StatisticsStore.addNewItem();
       }
     );
+  }
+
+  loadPositions(positions: (CubeType | null)[]) {
+    positions?.forEach((position) => {
+      if (position) {
+        this.grid.push(
+          new CubeType(position.kind, position.turns, position.connections)
+        );
+      } else {
+        this.grid.push(null);
+      }
+    });
   }
 
   init() {
