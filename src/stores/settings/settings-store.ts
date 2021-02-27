@@ -22,6 +22,7 @@ class SettingsStore {
     const settingsStorage = localStorage.getItem('settings');
     if (settingsStorage) {
       const settings = JSON.parse(settingsStorage);
+      this.status = settings.status || 'default';
       this.isSoundsOn = settings.isSoundsOn;
       this.isMusicOn = settings.isMusicOn;
       this.soundsVolume = settings.soundsVolume;
@@ -47,6 +48,7 @@ class SettingsStore {
         localStorage.setItem(
           'settings',
           JSON.stringify({
+            status: this.status,
             isSoundsOn: this.isSoundsOn,
             isMusicOn: this.isMusicOn,
             soundsVolume: this.soundsVolume,
