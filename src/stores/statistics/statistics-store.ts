@@ -8,7 +8,7 @@ type ItemType = {
 };
 
 class StatisticsStore {
-  items: ItemType[] = [];
+  items: ItemType[];
 
   movesCount = 0;
 
@@ -16,10 +16,13 @@ class StatisticsStore {
 
   constructor() {
     makeAutoObservable(this);
+    const statisticsStorage = localStorage.getItem('statistics');
+    this.items = statisticsStorage ? JSON.parse(statisticsStorage) : [];
     autorun(() => {
       if (this.items.length > 10) {
         this.removeLastItem();
       }
+      localStorage.setItem('statistics', JSON.stringify(this.items));
     });
   }
 

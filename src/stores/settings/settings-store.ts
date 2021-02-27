@@ -19,6 +19,17 @@ class SettingsStore {
 
   constructor() {
     makeAutoObservable(this);
+    const settingsStorage = localStorage.getItem('settings');
+    if (settingsStorage) {
+      const settings = JSON.parse(settingsStorage);
+      this.isSoundsOn = settings.isSoundsOn;
+      this.isMusicOn = settings.isMusicOn;
+      this.soundsVolume = settings.soundsVolume;
+      this.musicVolume = settings.musicVolume;
+      this.gridSize = settings.gridSize;
+      this.cubesCount = settings.cubesCount;
+      this.boardColor = settings.boardColor;
+    }
     autorun(() => {
       if (this.gridSize > 6) {
         this.changeGridSize(6);
@@ -32,6 +43,20 @@ class SettingsStore {
       if (this.cubesCount > this.gridSize ** 2 - 1) {
         this.changeCubesCount(this.gridSize ** 2 - 1);
       }
+      autorun(() => {
+        localStorage.setItem(
+          'settings',
+          JSON.stringify({
+            isSoundsOn: this.isSoundsOn,
+            isMusicOn: this.isMusicOn,
+            soundsVolume: this.soundsVolume,
+            musicVolume: this.musicVolume,
+            gridSize: this.gridSize,
+            cubesCount: this.cubesCount,
+            boardColor: this.boardColor,
+          })
+        );
+      });
     });
   }
 
