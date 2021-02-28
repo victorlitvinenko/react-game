@@ -61,7 +61,11 @@ const Cube: React.FC<Props> = ({ value, index }) => {
   });
 
   useEffect(() => {
-    value.changeTurns(rotation % 4);
+    setRotation(value.turns);
+  }, [value.turns]);
+
+  useEffect(() => {
+    value.changeTurns(rotation);
   }, [rotation, value]);
 
   useEffect(() => {

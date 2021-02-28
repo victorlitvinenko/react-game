@@ -62,6 +62,10 @@ class StatisticsStore {
   move() {
     this.movesCount += 1;
   }
+
+  changeMovesCount(num: number) {
+    this.movesCount = num;
+  }
 }
 
 export default new StatisticsStore();

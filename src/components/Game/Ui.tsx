@@ -108,6 +108,14 @@ const Ui: React.FC = () => {
         </NavLink>
         <Btn
           onClick={() => {
+            GridStore.init();
+            GridStore.autoPlay();
+          }}
+        >
+          <Icon.Play color="white" />
+        </Btn>
+        <Btn
+          onClick={() => {
             document.documentElement.requestFullscreen();
           }}
         >

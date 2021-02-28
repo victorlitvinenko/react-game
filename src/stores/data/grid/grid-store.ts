@@ -6,6 +6,8 @@ import { CubeType, Kinds, Sides } from './cube';
 import SettingsStore from '../../settings/settings-store';
 import StatisticsStore from '../../statistics/statistics-store';
 
+const AUTOPLAY_DELAY = 300;
+
 class GridStore {
   SettingsStore = SettingsStore;
 
@@ -38,7 +40,12 @@ class GridStore {
     positions?.forEach((position) => {
       if (position) {
         this.grid.push(
-          new CubeType(position.kind, position.turns, position.connections)
+          new CubeType(
+            position.kind,
+            position.startPosition,
+            position.turns,
+            position.connections
+          )
         );
       } else {
         this.grid.push(null);
@@ -52,6 +59,49 @@ class GridStore {
     this.createConnections();
     this.shuffleCubes();
     StatisticsStore.reset();
+  }
+
+  autoPlay() {
+    if (!this.hasWon) {
+      StatisticsStore.changeMovesCount(0);
+      let counter = 0;
+      this.grid.forEach(async (cell, idx) => {
+        if (cell) {
+          if (cell.turns % 4 !== 0) {
+            setTimeout(() => {
+              if (cell.turns % 4 !== 0) cell.changeTurns(0);
+            }, counter * AUTOPLAY_DELAY);
+            counter += 1;
+          }
+          if (cell.startPosition !== idx) {
+            setTimeout(() => {
+              const emptyCellsPositions = this.grid.reduce(
+                (acc: number[], el: CubeType | null, ind: number) => {
+                  if (!el) return [...acc, ind];
+                  return acc;
+                },
+                []
+              );
+              if (cell.startPosition !== idx)
+                if (this.grid[cell.startPosition]) {
+                  this.moveCube(
+                    idx,
+                    emptyCellsPositions[
+                      random(0, emptyCellsPositions.length - 1)
+                    ]
+                  );
+                } else {
+                  this.moveCube(idx, cell.startPosition);
+                }
+            }, counter * AUTOPLAY_DELAY);
+            counter += 1;
+          }
+        }
+      });
+      setTimeout(() => {
+        if (!this.hasWon) this.autoPlay();
+      }, counter * AUTOPLAY_DELAY);
+    }
   }
 
   get hasWon() {
@@ -133,7 +183,7 @@ class GridStore {
         }
       };
 
-      this.grid[position] = new CubeType(getRandomType());
+      this.grid[position] = new CubeType(getRandomType(), position);
       allPositions.push(position);
       currentPosition = position;
     }

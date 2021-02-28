@@ -40,21 +40,29 @@ export class CubeType {
 
   connections: ConnectionsType;
 
-  constructor(kind: Kinds, turns = 0, connections = initialConnections) {
+  startPosition: number;
+
+  constructor(
+    kind: Kinds,
+    startPosition: number,
+    turns = 0,
+    connections = initialConnections
+  ) {
     this.id = runningId;
     runningId += 1;
     this.kind = kind;
     this.turns = turns;
     this.connections = connections;
+    this.startPosition = startPosition;
     makeAutoObservable(this);
   }
 
   get currentConnections(): ConnectionsType {
     return {
-      [(Sides.Top + this.turns) % 4]: this.connections[Sides.Top],
-      [(Sides.Right + this.turns) % 4]: this.connections[Sides.Right],
-      [(Sides.Bottom + this.turns) % 4]: this.connections[Sides.Bottom],
-      [(Sides.Left + this.turns) % 4]: this.connections[Sides.Left],
+      [(Sides.Top + (this.turns % 4)) % 4]: this.connections[Sides.Top],
+      [(Sides.Right + (this.turns % 4)) % 4]: this.connections[Sides.Right],
+      [(Sides.Bottom + (this.turns % 4)) % 4]: this.connections[Sides.Bottom],
+      [(Sides.Left + (this.turns % 4)) % 4]: this.connections[Sides.Left],
     } as ConnectionsType;
   }
 

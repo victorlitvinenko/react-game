@@ -38,8 +38,8 @@ class SettingsStore {
       if (this.cubesCount < 2) {
         this.changeCubesCount(2);
       }
-      if (this.cubesCount > this.gridSize ** 2 - 1) {
-        this.changeCubesCount(this.gridSize ** 2 - 1);
+      if (this.cubesCount > this.gridSize ** 2 - 4) {
+        this.changeCubesCount(this.gridSize ** 2 - 4);
       }
       autorun(() => {
         localStorage.setItem(
