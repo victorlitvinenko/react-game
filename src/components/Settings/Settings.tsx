@@ -27,7 +27,7 @@ const Settings: React.FC = () => {
   };
 
   useHotkeys('esc', () => {
-    history.push('/');
+    applyChanges();
   });
 
   return (
