@@ -1,6 +1,7 @@
 .footer {
   &__github {
     position: fixed;
+    z-index: 3;
     left: 0;
     bottom: 0;
     display: flex;
@@ -28,6 +29,7 @@
 
   &__rs-school {
     position: fixed;
+    z-index: 3;
     right: 0;
     bottom: 0;
 

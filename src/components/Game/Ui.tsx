@@ -5,6 +5,7 @@ import * as Icon from 'react-feather';
 
 import RootStore from '../../stores/root-store';
 import Btn from '../Btn';
+import YoutTube from '../../images/YouTube.svg';
 
 import './ui.scss';
 
@@ -121,6 +122,11 @@ const Ui: React.FC = () => {
         >
           <Icon.Monitor color="white" />
         </Btn>
+        <a href="https://youtu.be/sXP45gxqu1A" target="_blank" rel="noreferrer">
+          <Btn>
+            <img src={YoutTube} alt="YouTube" />
+          </Btn>
+        </a>
       </div>
     </>
   );
