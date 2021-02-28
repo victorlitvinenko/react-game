@@ -40,6 +40,23 @@
     z-index: 1;
   }
 
+  &__hotkeys {
+    width: 180px;
+    color: white;
+    position: fixed;
+    right: 0;
+    top: 185px;
+    padding: 0 20px;
+
+    &--bold {
+      font-weight: bold;
+    }
+
+    @media (max-width: 1024px) {
+      display: none;
+    }
+  }
+
   &__settings {
     position: fixed;
     left: 0;
@@ -86,5 +103,21 @@
         outline: none;
       }
     }
+  }
+}
+
+.hotkeys-table {
+  margin-top: 35px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  font-size: 12px;
+
+  & span {
+    padding: 0 3px;
+    border: 1px solid white;
+    border-radius: 3px;
+    font-size: 12px;
+    background: #6291c9;
   }
 }

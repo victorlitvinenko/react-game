@@ -63,6 +63,35 @@ const Ui: React.FC = () => {
           disabled={!SettingsStore.isSoundsOn}
         />
       </div>
+      <div className="ui__hotkeys">
+        <div className="ui__hotkeys--bold">Горячие клавиши:</div>
+        <div className="hotkeys-table">
+          <div>
+            <span>Shift</span> + <span>N</span>
+          </div>
+          <div>Новая игра</div>
+          <div>
+            <span>Shift</span> + <span>M</span>
+          </div>
+          <div>Выключить звуки</div>
+          <div>
+            <span>Shift</span> + <span>S</span>
+          </div>
+          <div>Настройки</div>
+          <div>
+            <span>Shift</span> + <span>L</span>
+          </div>
+          <div>Статистика</div>
+          <div>
+            <span>Shift</span> + <span>F</span>
+          </div>
+          <div>Полноэкранный режим</div>
+          <div>
+            <span>Esc</span>
+          </div>
+          <div>Выход из полноэкранного режима</div>
+        </div>
+      </div>
       <div className="ui__settings">
         <Btn onClick={() => GridStore.init()}>
           <Icon.File color="white" />
@@ -77,6 +106,13 @@ const Ui: React.FC = () => {
             <Icon.Settings color="white" />
           </Btn>
         </NavLink>
+        <Btn
+          onClick={() => {
+            document.documentElement.requestFullscreen();
+          }}
+        >
+          <Icon.Monitor color="white" />
+        </Btn>
       </div>
     </>
   );

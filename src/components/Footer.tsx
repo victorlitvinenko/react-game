@@ -1,8 +1,37 @@
+import { useHotkeys } from 'react-hotkeys-hook';
+import { useHistory } from 'react-router-dom';
+
+import RootStore from '../stores/root-store';
 import rsLogo from '../images/rs_school_js.svg';
 
 import './footer.scss';
 
 const Footer: React.FC = () => {
+  const {
+    DataStore: { GridStore },
+    SettingsStore,
+  } = RootStore;
+
+  const history = useHistory();
+
+  useHotkeys('shift+n', () => {
+    GridStore.init();
+    history.push('/');
+  });
+  useHotkeys('shift+m', () => {
+    SettingsStore.switchMusic(false);
+    SettingsStore.switchSounds(false);
+  });
+  useHotkeys('shift+s', () => {
+    history.push('/settings');
+  });
+  useHotkeys('shift+l', () => {
+    history.push('/stats');
+  });
+  useHotkeys('shift+f', () => {
+    document.documentElement.requestFullscreen();
+  });
+
   return (
     <>
       <div className="footer__github">
