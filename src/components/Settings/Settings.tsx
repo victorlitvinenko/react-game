@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useHistory } from 'react-router-dom';
+import { useHotkeys } from 'react-hotkeys-hook';
 import * as Icon from 'react-feather';
 
 import rootStore from '../../stores/root-store';
@@ -24,6 +25,10 @@ const Settings: React.FC = () => {
     }
     history.push('/');
   };
+
+  useHotkeys('esc', () => {
+    history.push('/');
+  });
 
   return (
     <div className="settings">

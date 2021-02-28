@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import * as Icon from 'react-feather';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
+import { useHotkeys } from 'react-hotkeys-hook';
 import 'moment/locale/ru';
 
 import { formatDuration } from '../../libs/utils';
@@ -13,6 +14,12 @@ import './statistics.scss';
 moment.locale('ru');
 
 const Statistics: React.FC = () => {
+  const history = useHistory();
+
+  useHotkeys('esc', () => {
+    history.push('/');
+  });
+
   return (
     <div className="statistics">
       <div className="statistics__ui">
