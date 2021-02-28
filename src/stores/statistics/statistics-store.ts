@@ -16,7 +16,7 @@ class StatisticsStore {
 
   constructor() {
     makeAutoObservable(this);
-    const statisticsStorage = localStorage.getItem('statistics');
+    const statisticsStorage = localStorage.getItem('stats');
     this.items = statisticsStorage ? JSON.parse(statisticsStorage).items : [];
     this.movesCount = statisticsStorage
       ? JSON.parse(statisticsStorage).movesCount
@@ -29,7 +29,7 @@ class StatisticsStore {
         this.removeLastItem();
       }
       localStorage.setItem(
-        'statistics',
+        'stats',
         JSON.stringify({
           items: this.items,
           movesCount: this.movesCount,
