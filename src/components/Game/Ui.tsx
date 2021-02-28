@@ -1,9 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
+import { NavLink } from 'react-router-dom';
 import * as Icon from 'react-feather';
 
 import RootStore from '../../stores/root-store';
-import music from '../../sounds/music.mp3';
 import Btn from '../Btn';
 
 import './ui.scss';
@@ -14,22 +14,8 @@ const Ui: React.FC = () => {
     SettingsStore,
   } = RootStore;
 
-  const musicRef = useRef<HTMLAudioElement>(null);
-  document.addEventListener('click', () => musicRef.current?.play());
-
-  useEffect(() => {
-    if (musicRef.current) {
-      musicRef.current.volume = SettingsStore.isMusicOn
-        ? +SettingsStore.musicVolume
-        : 0;
-    }
-  }, [SettingsStore.isMusicOn, SettingsStore.musicVolume]);
-
   return (
     <>
-      <audio loop ref={musicRef} src={music}>
-        <track kind="captions" />
-      </audio>
       <div className="ui__title">
         <div
           className="ui__title-text"
@@ -78,15 +64,19 @@ const Ui: React.FC = () => {
         />
       </div>
       <div className="ui__settings">
-        <Btn onClick={() => SettingsStore.changeStatus('settings')}>
-          <Icon.Settings color="white" />
-        </Btn>
-        <Btn onClick={() => SettingsStore.changeStatus('stats')}>
-          <Icon.List color="white" />
-        </Btn>
         <Btn onClick={() => GridStore.init()}>
-          <Icon.RefreshCw color="white" />
+          <Icon.File color="white" />
         </Btn>
+        <NavLink to="/stats">
+          <Btn>
+            <Icon.List color="white" />
+          </Btn>
+        </NavLink>
+        <NavLink to="/settings">
+          <Btn>
+            <Icon.Settings color="white" />
+          </Btn>
+        </NavLink>
       </div>
     </>
   );

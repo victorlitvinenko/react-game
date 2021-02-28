@@ -1,8 +1,6 @@
 import { makeAutoObservable, autorun } from 'mobx';
 
 class SettingsStore {
-  status = 'default';
-
   isSoundsOn = true;
 
   isMusicOn = true;
@@ -22,7 +20,6 @@ class SettingsStore {
     const settingsStorage = localStorage.getItem('settings');
     if (settingsStorage) {
       const settings = JSON.parse(settingsStorage);
-      this.status = settings.status || 'default';
       this.isSoundsOn = settings.isSoundsOn;
       this.isMusicOn = settings.isMusicOn;
       this.soundsVolume = settings.soundsVolume;
@@ -48,7 +45,6 @@ class SettingsStore {
         localStorage.setItem(
           'settings',
           JSON.stringify({
-            status: this.status,
             isSoundsOn: this.isSoundsOn,
             isMusicOn: this.isMusicOn,
             soundsVolume: this.soundsVolume,
@@ -84,10 +80,6 @@ class SettingsStore {
 
   changeCubesCount(count: number) {
     this.cubesCount = count;
-  }
-
-  changeStatus(status: string) {
-    this.status = status;
   }
 
   changeColor(color: string) {

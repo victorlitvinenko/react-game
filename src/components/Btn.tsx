@@ -3,7 +3,7 @@ import cn from 'classnames';
 import './btn.scss';
 
 type Props = {
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   children: JSX.Element;
 };

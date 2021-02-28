@@ -12,23 +12,36 @@ class StatisticsStore {
 
   movesCount = 0;
 
-  beginTime = moment();
+  beginTime = moment().toDate();
 
   constructor() {
     makeAutoObservable(this);
     const statisticsStorage = localStorage.getItem('statistics');
-    this.items = statisticsStorage ? JSON.parse(statisticsStorage) : [];
+    this.items = statisticsStorage ? JSON.parse(statisticsStorage).items : [];
+    this.movesCount = statisticsStorage
+      ? JSON.parse(statisticsStorage).movesCount
+      : 0;
+    this.beginTime = statisticsStorage
+      ? JSON.parse(statisticsStorage).beginTime
+      : moment().toDate();
     autorun(() => {
       if (this.items.length > 10) {
         this.removeLastItem();
       }
-      localStorage.setItem('statistics', JSON.stringify(this.items));
+      localStorage.setItem(
+        'statistics',
+        JSON.stringify({
+          items: this.items,
+          movesCount: this.movesCount,
+          beginTime: this.beginTime,
+        })
+      );
     });
   }
 
   reset() {
     this.movesCount = 0;
-    this.beginTime = moment();
+    this.beginTime = moment().toDate();
   }
 
   addNewItem() {
