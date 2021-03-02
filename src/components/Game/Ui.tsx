@@ -9,6 +9,20 @@ import YoutTube from '../../images/YouTube.svg';
 
 import './ui.scss';
 
+const fullscreen = () => {
+  const isInFullScreen =
+    document.fullscreenElement && document.fullscreenElement !== null;
+
+  const docElm = document.documentElement;
+  if (!isInFullScreen) {
+    if (docElm.requestFullscreen) {
+      docElm.requestFullscreen();
+    }
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+};
+
 const Ui: React.FC = () => {
   const {
     DataStore: { GridStore },
@@ -115,11 +129,7 @@ const Ui: React.FC = () => {
         >
           <Icon.Play color="white" />
         </Btn>
-        <Btn
-          onClick={() => {
-            document.documentElement.requestFullscreen();
-          }}
-        >
+        <Btn onClick={fullscreen}>
           <Icon.Monitor color="white" />
         </Btn>
         <a href="https://youtu.be/sXP45gxqu1A" target="_blank" rel="noreferrer">
