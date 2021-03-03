@@ -1,0 +1,30 @@
+.statistics {
+  color: white;
+
+  &__ui {
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+  }
+
+  &__title {
+    font-size: 38px;
+    margin-bottom: 50px;
+    font-weight: bold;
+  }
+
+  & td {
+    font-size: 22px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+
+    @media (max-width: 690px) {
+      font-size: 16px;
+    }
+
+    @media (max-width: 520px) {
+      font-size: 14px;
+    }
+  }
+}

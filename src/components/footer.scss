@@ -1,0 +1,47 @@
+.footer {
+  &__github {
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+
+    & > div {
+      font-size: 24px;
+      color: white;
+     text-shadow: 1px 1px 0 black;
+    }
+
+    & a {
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+    }
+
+    & svg {
+      width: 48px;
+      height: 48px;
+      margin: 20px;
+      cursor: pointer;
+    }
+  }
+
+  &__rs-school {
+    position: fixed;
+    z-index: 3;
+    right: 0;
+    bottom: 0;
+
+    & a {
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+    }
+
+    & img {
+      width: 120px;
+      margin: 20px;
+    }
+  }
+}

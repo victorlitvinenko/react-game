@@ -1,0 +1,139 @@
+.cube {
+  position: relative;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+    border-radius: 10px;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 13%;
+
+    &--right {
+      left: calc(100% + 1px);
+    }
+
+    &--left {
+      right: calc(100% + 1px);
+    }
+
+    & > div {
+      height: 8px;
+      background: white;
+      margin: 12px 0;
+    }
+
+    &--bottom {
+      top: calc(100% + 1px);
+      display: flex;
+      justify-content: center;
+      display: flex;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: inherit;
+      height: 13%;
+
+      & > div {
+        height: 100%;
+        width: 8px;
+        background: white;
+        margin: 0 6px;
+      };
+    }
+
+    &--top {
+      top: inherit;
+      bottom: calc(100% + 1px);
+      display: flex;
+      justify-content: center;
+      display: flex;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: inherit;
+      height: 13%;
+
+      & > div {
+        height: 100%;
+        width: 8px;
+        background: white;
+        margin: 0 6px;
+      };
+    }
+  }
+
+  & > div {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 10px;
+    transition: .3s;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      opacity: .6;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+  }
+
+  &--draggable {
+    & > div {
+      background: #329940;
+      border: 1px solid #125c37;
+
+      &::after {
+        background-image: url("../../images/draggable.svg");
+        background-size: 60%;
+      }
+    }
+  }
+
+  &--fixed {
+    & > div {
+      background: #e51949;
+      border: 1px solid #6d0a21;
+      cursor: default;
+
+      &::after {
+        background-image: url("../../images/fixed.svg");
+        background-size: 85%;
+      }
+    }
+  }
+
+  &--rotatable {
+    & > div {
+      background: #1ca0eb;
+      border: 1px solid #0a3e5c;
+
+      &::after {
+        background-image: url("../../images/rotatable.svg");
+        background-size: 60%;
+      }
+    }
+  }
+
+  &--dragrotatable {
+    & > div {
+      background: #f58331;
+      border: 1px solid #5e3212;
+
+      &::after {
+        background-image: url("../../images/dragrotatable.svg");
+        background-size: 60%;
+      }
+    }
+  }
+}
